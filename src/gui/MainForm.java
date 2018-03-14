@@ -1,5 +1,8 @@
 package gui;
 
+import java.awt.Font;
+import model.TextoConFormato;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,12 +14,44 @@ package gui;
  * @author Diana Sanchez DLC
  */
 public class MainForm extends javax.swing.JFrame {
+    private final String TEXTO_PREDET = "Instituto Tecnológico de Campeche";
+    TextoConFormato txt;
 
     /**
      * Creates new form MainForm
      */
     public MainForm() {
         initComponents();
+        txt = new TextoConFormato(TEXTO_PREDET);
+        actualizarModelo();
+        actualizarVista();
+        
+        
+    }
+    private void actualizarVista() {
+        etiquetaTexto.setText(txt.getTexto());
+        etiquetaTexto.setFont(txt.getFont());
+    }
+    private void actualizarModelo() {
+        txt.setTexto(etiquetaTexto.getText());
+        txt.setFuente((String) comboBoxFuente.getSelectedItem());
+        txt.setEstilo(Font.PLAIN);
+        
+        if (checkBoxNegrita.isSelected()) {
+            txt.setEstilo(txt.getEstilo() + Font.BOLD);
+        }
+        if (checkBoxCursiva.isSelected()) {
+            txt.setEstilo(txt.getEstilo() + Font.ITALIC);
+        }
+        if (radioButtonPequenio.isSelected()) {
+            txt.setTamanio(TextoConFormato.TAMANIO_PEQUENIO);
+        }
+        else if (radioButtonMediano.isSelected()) {
+            txt.setTamanio(TextoConFormato.TAMANIO_MEDIANO);
+        }
+        else {
+            txt.setTamanio(TextoConFormato.TAMANIO_GRANDE);
+        }
     }
 
     /**
@@ -48,6 +83,15 @@ public class MainForm extends javax.swing.JFrame {
 
         etiquetaTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         etiquetaTexto.setText("Instituto Tecnológico de Campeche");
+        etiquetaTexto.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                etiquetaTextoAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,10 +136,29 @@ public class MainForm extends javax.swing.JFrame {
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Estilo"));
+        jPanel3.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jPanel3AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         checkBoxNegrita.setText("Negrita");
+        checkBoxNegrita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxNegritaActionPerformed(evt);
+            }
+        });
 
         checkBoxCursiva.setText("Cursiva");
+        checkBoxCursiva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxCursivaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -119,15 +182,39 @@ public class MainForm extends javax.swing.JFrame {
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tamaño"));
+        jPanel4.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jPanel4AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         grupoTamanio.add(radioButtonPequenio);
         radioButtonPequenio.setText("Pequeño");
+        radioButtonPequenio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonPequenioActionPerformed(evt);
+            }
+        });
 
         grupoTamanio.add(radioButtonMediano);
         radioButtonMediano.setText("Mediano");
+        radioButtonMediano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonMedianoActionPerformed(evt);
+            }
+        });
 
         grupoTamanio.add(radioButtonGrande);
         radioButtonGrande.setText("Grande");
+        radioButtonGrande.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonGrandeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -145,7 +232,7 @@ public class MainForm extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(radioButtonPequenio)
+                .addComponent(radioButtonPequenio, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(radioButtonMediano)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -165,9 +252,9 @@ public class MainForm extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -187,8 +274,41 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboBoxFuenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxFuenteActionPerformed
-        // TODO add your handling code here:
+        actualizarModelo();
+        actualizarVista();
     }//GEN-LAST:event_comboBoxFuenteActionPerformed
+
+    private void etiquetaTextoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_etiquetaTextoAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_etiquetaTextoAncestorAdded
+
+    private void checkBoxNegritaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxNegritaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkBoxNegritaActionPerformed
+
+    private void checkBoxCursivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxCursivaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkBoxCursivaActionPerformed
+
+    private void radioButtonPequenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonPequenioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioButtonPequenioActionPerformed
+
+    private void radioButtonMedianoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonMedianoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioButtonMedianoActionPerformed
+
+    private void radioButtonGrandeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonGrandeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioButtonGrandeActionPerformed
+
+    private void jPanel3AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel3AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel3AncestorAdded
+
+    private void jPanel4AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel4AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel4AncestorAdded
 
     /**
      * @param args the command line arguments

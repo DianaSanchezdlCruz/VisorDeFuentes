@@ -5,6 +5,8 @@
  */
 package visordefuentes;
 
+import gui.MainForm;
+
 /**
  *
  * @author Diana Sanchez DLC
@@ -15,6 +17,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        MainForm ventana = new MainForm ();
+        ventana.setVisible (true);
         // TODO code application logic here
     }
     
